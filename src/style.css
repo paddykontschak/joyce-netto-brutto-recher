@@ -32,6 +32,7 @@ i:hover {
 }
 
 input,
+select {
     box-shadow: none;
     border-radius: 5px;
     padding: 5px 10px;
@@ -39,6 +40,14 @@ input,
     border: 1px solid #BCBCBC;
     appearance: none;
     -webkit-appearance: none;
+}
+
+select {
+    background-image: url(../img/chevron-down-solid.svg);
+    background-repeat: no-repeat;
+    background-position: calc(100% - 10px) center;
+    background-size: 15px;
+    background-origin: border-box;
 }
 
 #calculator {
@@ -105,6 +114,10 @@ input,
     content: attr(data-label);
 }
 
+.remove-row {
+    justify-self: end;
+}
+
 @media (min-width: 1024px) {
     body {
         align-items: center;
@@ -133,5 +146,9 @@ input,
     .label::before {
         content: '';
         display: none;
+    }
+
+    .remove-row {
+        justify-self: center;
     }
 }
