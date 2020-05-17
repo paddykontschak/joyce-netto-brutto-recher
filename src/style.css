@@ -31,11 +31,41 @@ i:hover {
     color: maroon;
 }
 
+input,
+    box-shadow: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    line-height: 22px;
+    border: 1px solid #BCBCBC;
+    appearance: none;
+    -webkit-appearance: none;
+}
 
 #calculator {
     display: grid;
     max-width: 100vw;
     padding: 20px;
+}
+
+.currency-input {
+    display: grid;
+    align-items: center;
+    grid-template-columns: calc(100% - 15px) 15px;
+    box-shadow: none;
+    border-radius: 5px;
+    line-height: 22px;
+    border: 1px solid #BCBCBC;
+}
+
+.currency-input input {
+    border: none;
+    padding: 5px 0 5px 10px;
+    max-width: 100%;
+    text-align: right;
+}
+
+.currency-input::after {
+    content: '€';
 }
 
 .row {
@@ -57,9 +87,31 @@ i:hover {
     grid-template-columns: 1fr;
 }
 
+.total p {
+    font-weight: 700;
+}
+
+.total input {
+    pointer-events: none;
+}
+
+.label {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    align-items: center;
+}
+
+.label::before {
+    content: attr(data-label);
+}
+
 @media (min-width: 1024px) {
     body {
         align-items: center;
+    }
+
+    .currency-input {
+        grid-template-columns: 85px 15px;
     }
 
     .row {
@@ -68,5 +120,18 @@ i:hover {
 
     .row.heading {
         display: grid;
+    }
+
+    .total {
+        grid-template-columns: 420px repeat(3, 100px) 30px;
+    }
+
+    .label {
+        grid-template-columns: 1fr;
+    }
+
+    .label::before {
+        content: '';
+        display: none;
     }
 }
