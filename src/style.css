@@ -17,6 +17,10 @@ h1 {
     margin-bottom: 50px;
 }
 
+p {
+    margin: 0;
+}
+
 i {
     color: #C36D64;
     cursor: pointer;
@@ -34,8 +38,35 @@ i:hover {
     padding: 20px;
 }
 
+.row {
+    display: grid;
+    grid-gap: 20px;
+    padding: 10px 0;
+    align-items: center;
+    border-top: 1px solid #DEDEDE;
+}
+
+.row.heading {
+    display: none;
+    border: none;
+    font-weight: 500;
+}
+
+.row.full {
+    justify-items: center;
+    grid-template-columns: 1fr;
+}
+
 @media (min-width: 1024px) {
     body {
         align-items: center;
+    }
+
+    .row {
+        grid-template-columns: 250px 150px repeat(3, 100px) 30px;
+    }
+
+    .row.heading {
+        display: grid;
     }
 }
