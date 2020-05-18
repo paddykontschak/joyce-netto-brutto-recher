@@ -7,10 +7,10 @@ export function updateValidations(id, value) {
     validations[id] = value
 }
 
-export function incrementRow() {
-    row++
-}
-
-export function decreaseRow() {
-    row--
+export function updateRow(action) {
+    if (action === 'add') {
+        row++
+    } else if (action === 'remove') {
+        row--
+    }
 }

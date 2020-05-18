@@ -1,4 +1,4 @@
-import { updateValidations, row, decreaseRow } from './global.js'
+import { updateValidations, row, updateRow } from './global.js'
 import { addRow, currencyValidator, calculate } from './functions.js'
 
 // add first row
@@ -16,7 +16,7 @@ document.addEventListener('click', (event) => {
         // keep at least 1 row though
         if (row != 1) {
             event.target.parentElement.parentElement.remove()
-            decreaseRow()
+            updateRow('remove')
         }
     }
 

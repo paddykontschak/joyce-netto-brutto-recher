@@ -1,8 +1,8 @@
-import { currencyPattern, validations, updateValidations, row, incrementRow } from './global.js'
+import { currencyPattern, validations, updateValidations, row, updateRow } from './global.js'
 
 export function addRow(el) {
     // increase row number
-    incrementRow()
+    updateRow('add')
 
     // row div#row
     const newRow = document.createElement('div')
@@ -114,11 +114,13 @@ export function calculate(el, from, mwst) {
     const mwstId = `#${currentRow}-mwst`
     const nettoId = `#${currentRow}-netto`
     const bruttoId = `#${currentRow}-brutto`
+    // || 0 makes sure the calculation doesn't return NaN
     const value = mwst ? parseFloat(document.querySelector(nettoId).value) || 0 : parseFloat(el.value) || 0
     let totalNetto = 0
     let totalBrutto = 0
     
     // calculate netto and brutto
+    // both mwst and netto calculate brutto
     if (mwst || from === 'netto') {
         mwst = mwst ? parseFloat(mwst) || 0 : parseFloat(document.querySelector(mwstId).value) || 0
         document.querySelector(bruttoId).value = parseFloat(value + ((value / 100) * mwst)).toFixed(2)
