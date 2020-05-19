@@ -37,6 +37,10 @@ function events(event) {
                     calculate(e.target, 'brutto')
                 }
             })
+
+            input.addEventListener('blur', (e) => {
+                e.target.value = parseFloat(e.target.value).toFixed(2)
+            })
         }
     }
 
