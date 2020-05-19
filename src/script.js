@@ -21,9 +21,7 @@ document.addEventListener('click', (event) => {
     }
 
     // collect all netto and brutto input ids and their values
-    for (let index = 0; index < document.getElementsByTagName('input').length; index++) {
-        const input = document.getElementsByTagName('input')[index]
-        
+    for (const input of document.getElementsByTagName('input')) {
         if (input.id) {
             updateValidations(input.id, input.value)
         }
@@ -43,10 +41,8 @@ document.addEventListener('click', (event) => {
     }
 
     // calculate on mwst change
-    for (let index = 0; index < document.getElementsByTagName('select').length; index++) {
-        const select = document.getElementsByTagName('select')[index]
-    
-        select.addEventListener('change', (e) => {
+    for (const option of document.getElementsByTagName('select')) {
+        option.addEventListener('change', (e) => {
             calculate(e.target, 'netto', e.target.value)
         })
     }

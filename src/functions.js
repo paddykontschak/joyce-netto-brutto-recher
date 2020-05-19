@@ -79,13 +79,11 @@ export function calculate(el, from, mwst) {
     }
 
     // calculate totals
-    for (let index = 0; index < document.querySelectorAll('[id^="row-"][id$="-netto"]').length; index++) {
-        const netto = document.querySelectorAll('[id^="row-"][id$="-netto"]')[index];
+    for (const netto of document.querySelectorAll('[id^="row-"][id$="-netto"]')) {
         totalNetto += parseFloat(netto.value) || 0
     }
 
-    for (let index = 0; index < document.querySelectorAll('[id^="row-"][id$="-brutto"]').length; index++) {
-        const brutto = document.querySelectorAll('[id^="row-"][id$="-brutto"]')[index];
+    for (const brutto of document.querySelectorAll('[id^="row-"][id$="-brutto"]')) {
         totalBrutto += parseFloat(brutto.value) || 0
     }
 
