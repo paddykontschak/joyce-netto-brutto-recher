@@ -9,8 +9,8 @@ document.querySelector('#add-row i').addEventListener('click', (event) => {
     addRow(event.target.parentElement)
 })
 
-// global click event for dynamically created elements
-document.addEventListener('click', (event) => {
+// main logic
+function events(event) {
     if (event.target && event.target.className.includes('remove-row')) {
         // allow the user to delete rows
         // keep at least 1 row though
@@ -46,4 +46,23 @@ document.addEventListener('click', (event) => {
             calculate(e.target, 'netto', e.target.value)
         })
     }
- })
+}
+
+// global click event for dynamically created elements
+// multiple events to cover multiple ways to start using the page
+// (clicking, navigation with tab through inputs)
+document.addEventListener('click', (event) => {
+    events(event);
+})
+
+document.addEventListener('touchstart', (event) => {
+    events(event);
+})
+
+document.addEventListener('change', (event) => {
+    events(event);
+})
+
+document.addEventListener('keydown', (event) => {
+    events(event);
+})
