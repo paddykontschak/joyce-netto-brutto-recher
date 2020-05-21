@@ -5,17 +5,15 @@ import { addRow, currencyValidator, calculate } from './functions.js'
 addRow(document.querySelector('#add-row'))
 
 // allow user to add additional rows
-document.querySelector('#add-row i').addEventListener('click', (event) => {
-    addRow(event.target.parentElement)
-})
+document.querySelector('#add-row i').addEventListener('click', ({target}) => addRow(target.parentElement))
 
 // main logic
-function events(event) {
-    if (event.target && event.target.className.includes('remove-row')) {
+function events({target}) {
+    if (target && target.className.includes('remove-row')) {
         // allow the user to delete rows
         // keep at least 1 row though
         if (row != 1) {
-            event.target.parentElement.parentElement.remove()
+            target.parentElement.parentElement.remove()
             updateRow('remove')
         }
     }
@@ -28,45 +26,30 @@ function events(event) {
     
         // validate and calculate on input change
         if (input.parentElement.className === 'currency-input') {
-            input.addEventListener('input', (e) => {
-                currencyValidator(e.target)
+            input.addEventListener('input', ({target}) => {
+                currencyValidator(target)
     
-                if (e.target.id.includes('-netto')) {
-                    calculate(e.target, 'netto')
+                if (target.id.includes('-netto')) {
+                    calculate(target, 'netto')
                 } else {
-                    calculate(e.target, 'brutto')
+                    calculate(target, 'brutto')
                 }
             })
 
-            input.addEventListener('blur', (e) => {
-                e.target.value = parseFloat(e.target.value).toFixed(2)
-            })
+            input.addEventListener('blur', ({target}) => target.value = parseFloat(target.value).toFixed(2))
         }
     }
 
     // calculate on mwst change
     for (const option of document.getElementsByTagName('select')) {
-        option.addEventListener('change', (e) => {
-            calculate(e.target, 'netto', e.target.value)
-        })
+        option.addEventListener('change', ({target}) => calculate(target, 'netto', target.value))
     }
 }
 
 // global click event for dynamically created elements
 // multiple events to cover multiple ways to start using the page
 // (clicking, navigation with tab through inputs)
-document.addEventListener('click', (event) => {
-    events(event);
-})
-
-document.addEventListener('touchstart', (event) => {
-    events(event);
-})
-
-document.addEventListener('change', (event) => {
-    events(event);
-})
-
-document.addEventListener('keydown', (event) => {
-    events(event);
-})
+document.addEventListener('click', (event) => events(event))
+document.addEventListener('touchstart', (event) => events(event))
+document.addEventListener('change', (event) => events(event))
+document.addEventListener('keydown', (event) => events(event))

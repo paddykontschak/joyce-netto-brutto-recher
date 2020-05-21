@@ -45,26 +45,26 @@ export function addRow(el) {
     document.getElementById('calculator').insertBefore(newRow, el)
 }
 
-export function currencyValidator(el) {
+export function currencyValidator({value, id}) {
     // if input is a digit or period add new value to validation
     // else force input value to be the last valid value
-    if (currencyPattern.test(el.value)) {
-        updateValidations(el.id, el.value)
+    if (currencyPattern.test(value)) {
+        updateValidations(id, value)
     } else {
-        el.value = validations[el.id]
+        value = validations[id]
     }
 }
 
-export function calculate(el, from, mwst) {
+export function calculate({value, id}, from, mwst) {
     // figure out which row we're on
     // generate id names
     // set initial values
-    const currentRow = mwst ? el.id.replace('-mwst','') : el.id.replace(`-${from}`,'')
+    const currentRow = mwst ? id.replace('-mwst','') : id.replace(`-${from}`,'')
     const mwstId = `#${currentRow}-mwst`
     const nettoId = `#${currentRow}-netto`
     const bruttoId = `#${currentRow}-brutto`
     // || 0 makes sure the calculation doesn't return NaN
-    const value = mwst ? parseFloat(document.querySelector(nettoId).value) || 0 : parseFloat(el.value) || 0
+    const sourceValue = mwst ? parseFloat(document.querySelector(nettoId).value) || 0 : parseFloat(value) || 0
     let totalNetto = 0
     let totalBrutto = 0
     
@@ -72,10 +72,10 @@ export function calculate(el, from, mwst) {
     // both mwst and netto calculate brutto
     if (mwst || from === 'netto') {
         mwst = mwst ? parseFloat(mwst) || 0 : parseFloat(document.querySelector(mwstId).value) || 0
-        document.querySelector(bruttoId).value = parseFloat(value + ((value / 100) * mwst)).toFixed(2)
+        document.querySelector(bruttoId).value = parseFloat(sourceValue + ((sourceValue / 100) * mwst)).toFixed(2)
     } else {
         mwst = parseFloat(document.querySelector(mwstId).value) || 0
-        document.querySelector(nettoId).value = parseFloat(value / (1 + (mwst / 100))).toFixed(2)
+        document.querySelector(nettoId).value = parseFloat(sourceValue / (1 + (mwst / 100))).toFixed(2)
     }
 
     // calculate totals
