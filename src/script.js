@@ -1,4 +1,4 @@
-import { updateValidations, row, updateRow } from './global.js'
+import { updateValidations, validations } from './global.js'
 import { addRow, currencyValidator, calculate } from './functions.js'
 
 // add first row
@@ -9,12 +9,12 @@ document.querySelector('#add-row i').addEventListener('click', ({target}) => add
 
 // main logic
 function events({target}) {
+    console.log(validations)
     if (target && target.className.includes('remove-row')) {
         // allow the user to delete rows
         // keep at least 1 row though
-        if (row != 1) {
+        if (target.parentElement.parentElement.parentElement.children.length > 5) {
             target.parentElement.parentElement.remove()
-            updateRow('remove')
         }
     }
 
@@ -29,7 +29,7 @@ function events({target}) {
             input.addEventListener('input', ({target}) => {
                 currencyValidator(target)
     
-                if (target.id.includes('-netto')) {
+                if (target.id.includes('netto-')) {
                     calculate(target, 'netto')
                 } else {
                     calculate(target, 'brutto')

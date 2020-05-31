@@ -1,8 +1,8 @@
-import { currencyPattern, validations, updateValidations, row, updateRow } from './global.js'
+import { currencyPattern, validations, updateValidations } from './global.js'
 
 export function addRow(el) {
     // increase row number
-    updateRow('add')
+    const row = Date.now() + Math.random().toString(36).substr(2, 9)
 
     const rowContent = `
         <div class="label" data-label="Leistung">
@@ -16,11 +16,11 @@ export function addRow(el) {
         </div>
         <div class="label" data-label="Preis netto">
             <div class="currency-input">
-                <input type="text" id="row-${row}-netto" placeholder="0.00" />
+                <input type="text" id="netto-${row}" placeholder="0.00" />
             </div>
         </div>
         <div class="label" data-label="Mwst">
-            <select id="row-${row}-mwst">
+            <select id="mwst-${row}">
                 <option value="0">0%</option>
                 <option value="7">7%</option>
                 <option value="19">19%</option>
@@ -28,7 +28,7 @@ export function addRow(el) {
         </div>
         <div class="label" data-label="Preis brutto">
             <div class="currency-input">
-                <input type="text" id="row-${row}-brutto" placeholder="0.00" />
+                <input type="text" id="brutto-${row}" placeholder="0.00" />
             </div>
         </div>
         <div class="label" data-label="Entfernen">
@@ -59,15 +59,15 @@ export function calculate({value, id}, from, mwst) {
     // figure out which row we're on
     // generate id names
     // set initial values
-    const currentRow = mwst ? id.replace('-mwst','') : id.replace(`-${from}`,'')
-    const mwstId = `#${currentRow}-mwst`
-    const nettoId = `#${currentRow}-netto`
-    const bruttoId = `#${currentRow}-brutto`
+    const currentRow = mwst ? id.replace('mwst-','') : id.replace(`${from}-`,'')
+    const mwstId = `#mwst-${currentRow}`
+    const nettoId = `#netto-${currentRow}`
+    const bruttoId = `#brutto-${currentRow}`
     // || 0 makes sure the calculation doesn't return NaN
     const sourceValue = mwst ? parseFloat(document.querySelector(nettoId).value) || 0 : parseFloat(value) || 0
     let totalNetto = 0
     let totalBrutto = 0
-    
+
     // calculate netto and brutto
     // both mwst and netto calculate brutto
     if (mwst || from === 'netto') {
@@ -79,8 +79,8 @@ export function calculate({value, id}, from, mwst) {
     }
 
     // calculate totals
-    totalNetto += parseFloat(Object.values(document.querySelectorAll('[id^="row-"][id$="-netto"]')).map((netto) => netto.value)) || 0
-    totalBrutto += parseFloat(Object.values(document.querySelectorAll('[id^="row-"][id$="-brutto"]')).map((brutto) => brutto.value)) || 0
+    totalNetto += parseFloat(Object.values(document.querySelectorAll('[id^="netto-"]')).map((netto) => netto.value)) || 0
+    totalBrutto += parseFloat(Object.values(document.querySelectorAll('[id^="brutto-"]')).map((brutto) => brutto.value)) || 0
 
     document.getElementById('total-netto').value = totalNetto.toFixed(2)
     document.getElementById('total-mwst').value = parseFloat(totalBrutto - totalNetto).toFixed(2)
