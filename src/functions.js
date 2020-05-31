@@ -79,8 +79,8 @@ export function calculate({value, id}, from, mwst) {
     }
 
     // calculate totals
-    totalNetto += parseFloat(Object.values(document.querySelectorAll('[id^="netto-"]')).map((netto) => netto.value)) || 0
-    totalBrutto += parseFloat(Object.values(document.querySelectorAll('[id^="brutto-"]')).map((brutto) => brutto.value)) || 0
+    Object.values(document.querySelectorAll('[id^="netto-"]')).map((netto) => totalNetto += parseFloat(netto.value) || 0)
+    Object.values(document.querySelectorAll('[id^="brutto-"]')).map((brutto) => totalBrutto += parseFloat(brutto.value) || 0)
 
     document.getElementById('total-netto').value = totalNetto.toFixed(2)
     document.getElementById('total-mwst').value = parseFloat(totalBrutto - totalNetto).toFixed(2)

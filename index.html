@@ -27,6 +27,40 @@
             <p>Preis brutto</p>
         </div>
         <div
+            id="row-0"
+            class="row"
+        >
+            <div class="label" data-label="Leistung">
+                <input type="text" />
+            </div>
+            <div class="label" data-label="Objekt">
+                <select>
+                    <option></option>
+                    <option></option>
+                </select>
+            </div>
+            <div class="label" data-label="Preis netto">
+                <div class="currency-input">
+                    <input type="text" id="netto-0" placeholder="0.00" />
+                </div>
+            </div>
+            <div class="label" data-label="Mwst">
+                <select id="mwst-0">
+                    <option value="0">0%</option>
+                    <option value="7">7%</option>
+                    <option value="19">19%</option>
+                </select>
+            </div>
+            <div class="label" data-label="Preis brutto">
+                <div class="currency-input">
+                    <input type="text" id="brutto-0" placeholder="0.00" />
+                </div>
+            </div>
+            <div class="label" data-label="Entfernen">
+                <i class="far fa-trash-alt remove-row"></i>
+            </div>
+        </div>
+        <div
             id="add-row"
             class="row full"
         >
